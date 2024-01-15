@@ -66,6 +66,7 @@ Dependencyにraas-client-ktorを追加（build.gradle.ktsのdependencies部分�
 ```
 implementation("jp.co.sutech:raas-client-ktor:0.0.17-SNAPSHOT")
 ```
+※利用するversionはSuTechの担当者に確認して下さい
 
 ### 3.2 FE用のsession関数を作成する
 2.1と同等の処理を作成する。
