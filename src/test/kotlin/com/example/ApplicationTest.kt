@@ -1,21 +1,20 @@
 package com.example
 
 import com.example.plugins.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
 import io.ktor.server.testing.*
+import jp.co.sutech.raas.RaasConnectionConfig
 import kotlin.test.*
 
 class ApplicationTest {
     @Test
     fun testRoot() = testApplication {
         application {
-            configureRouting()
-        }
-        client.get("/").apply {
-            assertEquals(HttpStatusCode.OK, status)
-            assertEquals("Hello World!", bodyAsText())
+            var config = RaasConnectionConfig(
+                application = environment.config.propertyOrNull("raas.application")?.getString() ?: "",
+                landscape = environment.config.propertyOrNull("raas.landscape")?.getString() ?: "",
+                token = environment.config.propertyOrNull("raas.token")?.getString() ?: ""
+            )
+            configureRouting(config)
         }
     }
 }

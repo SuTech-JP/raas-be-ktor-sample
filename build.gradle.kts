@@ -20,6 +20,13 @@ application {
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://maven.pkg.github.com/SuTech-JP/raas-client-ktor")
+        credentials {
+            username = System.getenv("RAAS_GITHUB_USER")
+            password = System.getenv("RAAS_GITHUB_TOKEN")
+        }
+    }
 }
 
 dependencies {
@@ -30,4 +37,8 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    implementation("io.ktor:ktor-server-cors")
+    implementation("jp.co.sutech:raas-client-ktor:0.0.17-SNAPSHOT")
+    implementation("io.ktor:ktor-server-config-yaml")
+
 }
