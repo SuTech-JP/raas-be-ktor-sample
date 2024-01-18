@@ -30,6 +30,9 @@ data class DataImportLogDetailCsvFile(val name: String, val url: String)
 @Serializable
 data class DataImportLogForFe(val id: String, val status: String, val details: List<DataImportLogDetail>)
 
+@Serializable
+data class RaasLayout(val id: Int, val name: String, val description: String)
+
 fun Application.configureRouting(cfg: RaasConnectionConfig) {
     val config = cfg
     routing {
@@ -60,6 +63,14 @@ fun Application.configureRouting(cfg: RaasConnectionConfig) {
                     call.respond(dataImportLog)
                 }
             }
+        }
+        get("/raas/report/layout/{application}/{schema}") {
+            val application = call.parameters["application"]
+            val schema = call.parameters["schema"]
+            val userCtx = RaasUserContext(tenant = "test", sub = "test")
+            var layouts =
+                get<List<RaasLayout>>(config = config, user = userCtx, "/report/layouts/${application}/${schema}")
+            call.respond(layouts)
         }
         post("/raas/{msa}/session") {
             val msa = call.parameters["msa"]
