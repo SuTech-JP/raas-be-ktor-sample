@@ -18,7 +18,11 @@ data class DataImportLogQue(val id: String, val tenant: String, val sub: String)
 data class DataImportLog(val id: String, val status: String)
 
 @Serializable
-data class DataImportLogDetail(val dataId: String, val pdfUrl: String, val csvFiles: List<DataImportLogDetailCsvFile>)
+data class DataImportLogDetail(val dataId: String, val pdfUrl: String, val csvFiles: List<DataImportLogDetailCsvFile> , val entity : InvoiceSample)
+
+//スキーマに合わせた業務データを定義
+@Serializable
+data class InvoiceSample(val title: String?, val message: String?, )
 
 @Serializable
 data class DataImportLogDetailCsvFile(val name: String, val url: String)
@@ -42,6 +46,7 @@ fun Application.configureRouting(cfg: RaasConnectionConfig) {
                         user = userCtx,
                         "/datatraveler/import/logs/${que.id}/data"
                     )
+                    println(dataImportLogDetails)
 
                     //PDFとJSONの取得を行い業務的に必要な処理（PDFをコピーしてJSONを元にDBにレコードを作る）を行う
                     call.respond(
