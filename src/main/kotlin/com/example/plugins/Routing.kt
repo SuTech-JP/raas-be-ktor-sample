@@ -40,7 +40,7 @@ fun Application.configureRouting(cfg: RaasConnectionConfig) {
             val targetDataImportLogId = call.parameters["targetId"]
             if (targetDataImportLogId != null) {
                 val que = DataImportLogQue(id = targetDataImportLogId, tenant = "test", sub = "test")   //DBから復元
-                val userCtx = RaasUserContext(tenant = que.tenant, sub = que.sub)
+                val userCtx = RaasUserContext(tenant = que.tenant, sub = que.sub, subDomain = "test")
                 var dataImportLog =
                     get<DataImportLog>(config = config, user = userCtx, "/datatraveler/import/logs/${que.id}")
                 if (dataImportLog.status == "FINISH") {
@@ -67,7 +67,7 @@ fun Application.configureRouting(cfg: RaasConnectionConfig) {
         get("/raas/report/layout/{application}/{schema}") {
             val application = call.parameters["application"]
             val schema = call.parameters["schema"]
-            val userCtx = RaasUserContext(tenant = "test", sub = "test")
+            val userCtx = RaasUserContext(tenant = "test", sub = "test", subDomain = "test")
             var layouts =
                 get<List<RaasLayout>>(config = config, user = userCtx, "/report/layouts/${application}/${schema}")
             call.respond(layouts)
@@ -78,7 +78,7 @@ fun Application.configureRouting(cfg: RaasConnectionConfig) {
             val body = call.receive<CreateExternalSessionHttpRequest>()
             var session = createExternalSession(
                 config,
-                RaasUserContext(tenant = "test", sub = "test"),
+                RaasUserContext(tenant = "test", sub = "test", subDomain = "test"),
                 msa,
                 body.backUrl,
                 body.subUrl
