@@ -38,7 +38,7 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     implementation("io.ktor:ktor-server-cors")
-    implementation("jp.co.sutech:raas-client-ktor:1.1.2")
+    implementation("jp.co.sutech:raas-client-ktor:1.1.3")
     implementation("io.ktor:ktor-server-config-yaml")
 
 }
