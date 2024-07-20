@@ -4,6 +4,7 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import jp.co.sutech.raas.deleteTenant
 import jp.co.sutech.raas.createExternalSession
 import jp.co.sutech.raas.RaasConnectionConfig
 import jp.co.sutech.raas.RaasUserContext
@@ -85,6 +86,11 @@ fun Application.configureRouting(cfg: RaasConnectionConfig) {
                 body.subDomain
             )
             call.respond(session)
+        }
+        post("/raas/tenant/delete") {
+            deleteTenant(config, "test")
+            println("Success")
+            call.respond(Unit)
         }
     }
 }
