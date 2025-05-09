@@ -4,7 +4,7 @@ val logback_version: String by project
 
 plugins {
     kotlin("jvm") version "1.9.22"
-    id("io.ktor.plugin") version "2.3.7"
+    id("io.ktor.plugin") version "3.1.3"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
 }
 
@@ -38,7 +38,7 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     implementation("io.ktor:ktor-server-cors")
-    implementation("jp.co.sutech:raas-client-ktor:1.1.6")
+    implementation("jp.co.sutech:raas-client-ktor:2.0.0")
     implementation("io.ktor:ktor-server-config-yaml")
 
 }
