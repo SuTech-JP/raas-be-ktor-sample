@@ -5,11 +5,13 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import io.ktor.server.plugins.cors.CORS
+import io.ktor.server.plugins.cors.routing.*
 import jp.co.sutech.raas.RaasConnectionConfig
 
 fun main(args: Array<String>) {
-    embeddedServer(Netty, commandLineEnvironment(args)).start(wait = true)
+    embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
+        module()
+    }.start(wait = true)
 }
 
 fun Application.module() {
@@ -19,8 +21,8 @@ fun Application.module() {
         token = environment.config.propertyOrNull("raas.token")?.getString() ?: ""
     )
 
-    install(CORS){
-        allowHost("*")
+    install(CORS) {
+        anyHost()
         allowHeader(HttpHeaders.ContentType)
     }
 
