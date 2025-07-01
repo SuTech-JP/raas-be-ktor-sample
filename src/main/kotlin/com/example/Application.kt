@@ -9,9 +9,7 @@ import io.ktor.server.plugins.cors.routing.*
 import jp.co.sutech.raas.RaasConnectionConfig
 
 fun main(args: Array<String>) {
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
-        module()
-    }.start(wait = true)
+    io.ktor.server.netty.EngineMain.main(args)
 }
 
 fun Application.module() {
@@ -20,6 +18,11 @@ fun Application.module() {
         landscape = environment.config.propertyOrNull("raas.landscape")?.getString() ?: "",
         token = environment.config.propertyOrNull("raas.token")?.getString() ?: ""
     )
+    
+    println("Loaded configuration:")
+    println("Application: ${config.application}")
+    println("Landscape: ${config.landscape}")
+    println("Token length: ${config.token.length}")
 
     install(CORS) {
         anyHost()
